@@ -15,6 +15,11 @@ public class TakeAwayBillImp implements TakeAwayBill {
     public double getOrderPrice(List<MenuItem> itemsOrdered, User user) 
             throws RestaurantBillException {
 
+        if(itemsOrdered.size()>30) {
+            throw new RestaurantBillException("Impossibile ordinare "
+                    + "un numero maggiore di 30 elementi");
+        }
+        
         int counter_gelati=0;
         for(int i = 0; i < itemsOrdered.size(); i++) {
             if(itemsOrdered.get(i).getType()==ItemType.Gelati) {

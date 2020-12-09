@@ -144,6 +144,15 @@ public class TakeAwayBillTest {
 
 
     }
+    
+    @Test(expected = RestaurantBillException.class)
+    public void testOrdine30Elementi() throws RestaurantBillException{
+        List<MenuItem> list = new ArrayList<MenuItem>();
+        for(int i = 0; i < 31; i++) {
+            list.add(new MenuItem(ItemType.Budini, "Pinguino", 2));
+        }
+        tkw_bill.getOrderPrice(list,new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13)));
+    }
 
 
 
