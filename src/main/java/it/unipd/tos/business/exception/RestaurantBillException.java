@@ -2,16 +2,11 @@
 // [CESARE] [OMODEI] [1187460]
 ////////////////////////////////////////////////////////////////////
 
-package it.unipd.tos;
+package it.unipd.tos.business.exception;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+public class RestaurantBillException extends Exception {
+
+    public RestaurantBillException(String message) {
+        super(message);
     }
 }
