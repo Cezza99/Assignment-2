@@ -37,7 +37,7 @@ public class TakeAwayBillTest {
         order.add(new MenuItem(ItemType.Bevande,"Coca Cola",2)); 
 
         try {
-            assertEquals(9, tkw_bill.getOrderPrice(order, new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13))),0);
+            assertEquals(9.5, tkw_bill.getOrderPrice(order, new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13))),0);
         } catch (RestaurantBillException ex) {
             // TODO Auto-generated catch block
             fail("Test failed");
@@ -152,6 +152,44 @@ public class TakeAwayBillTest {
             list.add(new MenuItem(ItemType.Budini, "Pinguino", 2));
         }
         tkw_bill.getOrderPrice(list,new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13)));
+    }
+    
+    @Test
+    public void testContoMinore10() {
+        List<MenuItem> list = new ArrayList<MenuItem>();
+        list.add(new MenuItem(ItemType.Gelati,"Cioccolato",2));
+        list.add(new MenuItem(ItemType.Gelati,"Fragola",2));
+        list.add(new MenuItem(ItemType.Budini,"Pinguino",3));
+        list.add(new MenuItem(ItemType.Bevande,"Coca Cola",2));
+
+        try {
+            assertEquals(9.5, tkw_bill.getOrderPrice(list, new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13))),0);
+        } catch (RestaurantBillException e) {
+            // TODO Auto-generated catch block
+            fail("Test failed");
+
+        }
+
+    }
+
+    @Test
+    public void testContoMinore10_SeiGelati() {
+        List<MenuItem> list = new ArrayList<MenuItem>();
+        list.add(new MenuItem(ItemType.Gelati,"Cioccolato",1));
+        list.add(new MenuItem(ItemType.Gelati,"Fragola",1));
+        list.add(new MenuItem(ItemType.Gelati,"Limone",1));
+        list.add(new MenuItem(ItemType.Gelati,"Gianduia",1));
+        list.add(new MenuItem(ItemType.Gelati,"Pistacchio",1));
+        list.add(new MenuItem(ItemType.Gelati,"Nocciola",1));
+
+        try {
+            assertEquals(6, tkw_bill.getOrderPrice(list, new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13))),0);
+        } catch (RestaurantBillException e) {
+            // TODO Auto-generated catch block
+            fail("Test failed");
+
+        }
+
     }
 
 
