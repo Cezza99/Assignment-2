@@ -80,7 +80,8 @@ public class TakeAwayBillTest {
 
 
     }
-
+    
+    @Test
     public void testScontoGelati() {
         List<MenuItem> list = new ArrayList<MenuItem>();
         list.add(new MenuItem(ItemType.Gelati,"Amarena",4));
@@ -101,6 +102,49 @@ public class TakeAwayBillTest {
 
 
     }
+    
+    @Test
+    public void testScontoGelati_ScontoTotale() {
+        List<MenuItem> list = new ArrayList<MenuItem>();
+        list.add(new MenuItem(ItemType.Gelati,"Amarena",10));
+        list.add(new MenuItem(ItemType.Gelati,"Limone",10));
+        list.add(new MenuItem(ItemType.Gelati,"Cioccolato",10)); 
+        list.add(new MenuItem(ItemType.Gelati,"Pistacchio",6)); 
+        list.add(new MenuItem(ItemType.Gelati,"Nocciola",10));   
+        list.add(new MenuItem(ItemType.Gelati,"Fragola",10));
+        list.add(new MenuItem(ItemType.Budini,"Pinguino",10));
+
+        try {
+            assertEquals(56.7, tkw_bill.getOrderPrice(list, new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13))),0);
+        } catch (RestaurantBillException e) {
+            // TODO Auto-generated catch block
+            fail("Test failed");
+
+        }
+
+
+    }
+
+    @Test
+    public void testScontoTotale() {
+        List<MenuItem> list = new ArrayList<MenuItem>();
+        list.add(new MenuItem(ItemType.Gelati,"Cioccolato",10));
+        list.add(new MenuItem(ItemType.Gelati,"Crema",10));
+        list.add(new MenuItem(ItemType.Gelati,"Limone",10));
+        list.add(new MenuItem(ItemType.Gelati,"Fragola",10));
+        list.add(new MenuItem(ItemType.Budini,"Pinguino",20));
+
+        try {
+            assertEquals(54, tkw_bill.getOrderPrice(list, new User("000001","Cesare","Omodei",LocalDate.of(1999,4,13))),0);
+        } catch (RestaurantBillException e) {
+            // TODO Auto-generated catch block
+            fail("Test failed");
+
+        }
+
+
+    }
+
 
 
 } 
