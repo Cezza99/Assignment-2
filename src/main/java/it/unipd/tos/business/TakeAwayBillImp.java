@@ -23,23 +23,33 @@ public class TakeAwayBillImp implements TakeAwayBill {
         }
 
         double sum = 0;
+        double prezzoPieno=0;
         double minimoPrezzo=Double.MAX_VALUE;
         
         for (int i = 0; i < itemsOrdered.size(); i++) {
             MenuItem item = itemsOrdered.get(i);
-            if(counter_gelati>5) {
-                if(item.getType()==ItemType.Gelati) {
-                    minimoPrezzo=item.getPrice()<minimoPrezzo
-                            ? item.getPrice() : minimoPrezzo;
-                }
+            
+            if(item.getType()==ItemType.Gelati) {
+                prezzoPieno+=item.getPrice();
+                minimoPrezzo=item.getPrice()<minimoPrezzo
+                        ? item.getPrice() : minimoPrezzo;
+            }
+            else if(item.getType()==ItemType.Budini){
+                prezzoPieno+=item.getPrice();
             }
             sum+=item.getPrice();
         }
         
         if(counter_gelati>5) {
             sum-=(minimoPrezzo/2);
+            prezzoPieno-=(minimoPrezzo/2);
         }
-                
+        
+        if(prezzoPieno>50) {
+            sum-=sum*0.1;
+        }
+        
+        
         return sum;
     }
 }
