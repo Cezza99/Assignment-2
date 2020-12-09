@@ -45,6 +45,13 @@ public class TakeAwayBillImp implements TakeAwayBill {
             sum+=item.getPrice();
         }
         
+        return calcSum(counter_gelati,minimoPrezzo,prezzoPieno,sum);
+    }
+
+    
+    private double calcSum(double counter_gelati,
+            double minimoPrezzo,double prezzoPieno,double sum) {
+        
         if(counter_gelati>5) {
             sum-=(minimoPrezzo/2);
             prezzoPieno-=(minimoPrezzo/2);
@@ -54,7 +61,12 @@ public class TakeAwayBillImp implements TakeAwayBill {
             sum-=sum*0.1;
         }
         
+        if(sum>0 && sum<10) {
+            sum+=0.5;
+        }
         
         return sum;
     }
+
+
 }
