@@ -5,6 +5,7 @@
 package it.unipd.tos.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class User {
     private String ID;
@@ -19,7 +20,10 @@ public class User {
         this.cognome = cognome;
         this.data_nascita = data_nascita;
     }
-
+    
+    public boolean isMinorenne() {
+        return Period.between(data_nascita, LocalDate.now()).getYears()<18;
+    }
     public String getID() {
         return ID;
     }

@@ -5,14 +5,19 @@
 package it.unipd.tos.business;
 
 import java.util.List;
+import java.time.LocalTime;
+import java.util.Random;
 import it.unipd.tos.model.ItemType;
 import it.unipd.tos.business.exception.RestaurantBillException;
 import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
 
 public class TakeAwayBillImp implements TakeAwayBill {
-
-    public double getOrderPrice(List<MenuItem> itemsOrdered, User user) 
+    static int ordiniGratis = 10;
+    static Random seed = new Random(1000);
+    
+    public double getOrderPrice(List<MenuItem> itemsOrdered, User user
+            ,LocalTime orderTime) 
             throws RestaurantBillException {
 
         if(itemsOrdered.size()>30) {
@@ -45,6 +50,9 @@ public class TakeAwayBillImp implements TakeAwayBill {
             sum+=item.getPrice();
         }
         
+        if(OrdineGratis(orderTime,user)) {
+            return 0;
+        }
         return calcSum(counter_gelati,minimoPrezzo,prezzoPieno,sum);
     }
 
@@ -66,6 +74,29 @@ public class TakeAwayBillImp implements TakeAwayBill {
         }
         
         return sum;
+    }
+    
+    private boolean OrdineGratis(LocalTime orderTime, User user) {
+
+        if (orderTime.isAfter(LocalTime.of(17, 59, 59)) && 
+                orderTime.isBefore(LocalTime.of(19, 00, 01))) {
+            if (user.isMinorenne()) {
+                if (ordiniGratis > 0) {
+
+                    int x = seed.nextInt() & Integer.MAX_VALUE;
+                    
+                    if (x % 100 < 50) {
+                        ordiniGratis--;
+                        return true;
+                    }
+                }
+            }
+        } else {
+            ordiniGratis = 10;
+        }
+
+        return false;
+
     }
 
 
